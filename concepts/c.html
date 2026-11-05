@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Концепт C — «Нить»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5FAF9;--ink:#0B2E32;--soft:#628386;--teal:#01959C;--teal-d:#016E74;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"Commissioner",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.nav{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:24px clamp(24px,6vw,110px);font-size:14px}
+.nav b{font-weight:600}.nav .l{display:flex;gap:30px;color:var(--soft)}.nav .l a:hover{color:var(--teal)}
+.scroll{height:320vh;position:relative}
+.stick{position:sticky;top:0;height:100svh;overflow:hidden}
+svg.thread{position:absolute;inset:0;width:100%;height:100%}
+svg.thread path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+#tangle{stroke:var(--ink);stroke-width:1.6;opacity:.85}
+#calm{stroke:var(--teal);stroke-width:2.4}
+.t{position:absolute;left:clamp(24px,6vw,110px);right:clamp(24px,6vw,110px);top:50%;transform:translateY(-50%);pointer-events:none}
+.t h2,.t h1{font-weight:300;letter-spacing:-.035em;line-height:.95}
+.s1,.s2{position:absolute;left:0;top:50%;transform:translateY(-50%);transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease)}
+.s1 h2{font-size:clamp(52px,8vw,132px)}
+.s1 p,.s2 p{font-size:clamp(17px,1.4vw,21px);color:var(--soft);margin-top:24px;max-width:36ch;line-height:1.5}
+.s2 h2{font-size:clamp(44px,6.4vw,104px);max-width:12ch}
+.s2 h2 b{font-weight:500;color:var(--teal-d)}
+.hide{opacity:0;filter:blur(8px);transform:translateY(calc(-50% + 30px))!important}
+.final{position:absolute;inset:0;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;padding:100px clamp(24px,6vw,110px) 60px;gap:40px;pointer-events:none;opacity:0;transition:opacity .9s var(--ease)}
+.final.on{opacity:1;pointer-events:auto}
+.final h1{font-size:clamp(54px,7.6vw,128px);font-weight:300;letter-spacing:-.04em;line-height:.9}
+.final .sub{font-size:clamp(17px,1.35vw,20px);line-height:1.55;color:var(--ink);max-width:40ch;margin-top:28px}
+.final .sub span{color:var(--soft)}
+.cta{display:flex;align-items:center;gap:24px;margin-top:34px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:12px;height:60px;padding:0 32px;border-radius:999px;background:var(--teal-d);color:#fff;font-weight:500;font-size:15.5px;transition:transform .5s var(--ease),background .3s}
+.btn:hover{background:var(--ink);transform:translateY(-2px)}
+.btn svg{width:17px;transition:transform .5s var(--ease)}.btn:hover svg{transform:translateX(4px)}
+.lnk{border-bottom:1px solid rgba(1,110,116,.35);padding-bottom:3px;color:var(--teal-d)}
+.proof{display:flex;gap:36px;margin-top:46px;font-size:13.5px;color:var(--soft)}
+.proof b{display:block;font-size:24px;font-weight:400;color:var(--ink);letter-spacing:-.02em}
+.knot{justify-self:center;position:relative;width:min(36vw,500px);aspect-ratio:1}
+.knot .ph{position:absolute;inset:0;border-radius:50%;overflow:hidden;clip-path:circle(0% at 50% 50%);transition:clip-path 1.4s var(--ease)}
+.final.on .knot .ph{clip-path:circle(50% at 50% 50%)}
+.knot img{width:100%;height:100%;object-fit:cover;object-position:50% 16%;transform:scale(1.15);transition:transform 2.4s var(--ease)}
+.final.on .knot img{transform:scale(1)}
+.knot::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:2.4px solid var(--teal);clip-path:inset(0 0 0 0);stroke-dasharray:1;opacity:0;transition:opacity 1s .4s}
+.final.on .knot::after{opacity:.5}
+.hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:13px;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .5s}
+.hint i{width:1.5px;height:38px;background:linear-gradient(var(--soft),transparent);animation:hint 1.8s ease-in-out infinite;transform-origin:top}
+@keyframes hint{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+.after{min-height:60vh;display:grid;place-items:center;color:var(--soft);font-size:15px;text-align:center;padding:40px}
+@media (max-width:860px){
+  .nav .l{display:none}
+  .final{grid-template-columns:1fr;padding-top:84px;gap:20px;align-content:center}
+  .knot{width:min(56vw,260px);order:-1;justify-self:start}
+  .proof{gap:20px}
+  .final h1{font-size:13vw}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<nav class="nav"><b>Руслана Завалихина</b><div class="l"><a href="#">С чем помогаю</a><a href="#">Курсы</a><a href="#">Отзывы</a><a href="tel:+79161480303">+7 916 148-03-03</a></div></nav>
+<div class="scroll" id="scroll">
+  <div class="stick">
+    <svg class="thread" id="svg" preserveAspectRatio="none"><path id="tangle" pathLength="1"/><path id="calm" pathLength="1"/></svg>
+    <div class="t">
+      <div class="s1" id="s1"><h2>Всё запуталось?</h2><p>Отношения, дети, тревога, усталость. Когда узел затянут, кажется, что выхода нет.</p></div>
+      <div class="s2 hide" id="s2"><h2>Распутаем <b>по одной нити</b></h2><p>Бережно, без осуждения и с опорой на науку.</p></div>
+    </div>
+    <div class="final" id="final">
+      <div>
+        <h1>Руслана<br>Завалихина</h1>
+        <p class="sub">Психолог, кандидат психологических наук, доцент ВАК. <span>28 лет помогаю семьям, детям и взрослым находить выход там, где его не видно.</span></p>
+        <div class="cta">
+          <a class="btn" href="https://psychologruslana.ru/product/konsultatsii-onlayn-offlayn/">Записаться на консультацию <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="lnk" href="https://psychologruslana.ru/product/kursy/">Авторские курсы</a>
+        </div>
+        <div class="proof"><span><b>28 лет</b>практики</span><span><b>22 года</b>в вузе</span><span><b>1000+</b>выпускников</span></div>
+      </div>
+      <div class="knot"><div class="ph"><img src="../img/ruslana.jpg" alt="Руслана Завалихина"></div></div>
+    </div>
+    <div class="hint" id="hint">Листайте, чтобы распутать<i></i></div>
+  </div>
+</div>
+<div class="after">Дальше идёт остальной сайт: с чем помогаю, курсы, документы, отзывы.</div>
+<script>
+(function(){
+  var svg=document.getElementById('svg'),T=document.getElementById('tangle'),C=document.getElementById('calm');
+  var s1=document.getElementById('s1'),s2=document.getElementById('s2'),fin=document.getElementById('final'),hint=document.getElementById('hint'),sc=document.getElementById('scroll');
+  function build(){
+    var W=innerWidth,H=innerHeight;svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    // tangle: seeded loops around centre-right
+    var seed=7;function r(){seed=(seed*16807)%2147483647;return seed/2147483647}
+    var cx=W*(W<860?.5:.72),cy=H*(W<860?.62:.5),R=Math.min(W,H)*(W<860?.3:.26),d='M -20 '+(H*.62),px=-20,py=H*.62;
+    d+=' C '+(W*.18)+' '+(H*.7)+' '+(W*.3)+' '+(H*.4)+' '+(cx-R)+' '+cy;
+    for(var k=0;k<26;k++){var a=r()*Math.PI*2,b=r()*Math.PI*2,rr=R*(.35+r()*.75),rr2=R*(.3+r()*.8);
+      d+=' S '+(cx+Math.cos(a)*rr).toFixed(1)+' '+(cy+Math.sin(a)*rr).toFixed(1)+' '+(cx+Math.cos(b)*rr2).toFixed(1)+' '+(cy+Math.sin(b)*rr2).toFixed(1)}
+    d+=' S '+(W*.9)+' '+(H*.3)+' '+(W+20)+' '+(H*.38);
+    T.setAttribute('d',d);
+    // calm: one gentle wave, left to right
+    var y=H*(W<860?.95:.93);
+    C.setAttribute('d','M -20 '+y+' C '+(W*.25)+' '+(y-60)+' '+(W*.45)+' '+(y+50)+' '+(W*.62)+' '+(y-10)+' S '+(W*.9)+' '+(y-40)+' '+(W+20)+' '+(y-20));
+  }
+  function clamp(x){return Math.max(0,Math.min(1,x))}
+  function on(){
+    var rect=sc.getBoundingClientRect(),total=sc.offsetHeight-innerHeight,p=clamp(-rect.top/total);
+    var draw=clamp(p/.12),untie=clamp((p-.2)/.5),calm=clamp((p-.35)/.45);
+    T.style.strokeDasharray='1 1';T.style.strokeDashoffset=(1-draw)+untie*1;T.style.opacity=.85*(1-untie*.6);
+    C.style.strokeDasharray='1 1';C.style.strokeDashoffset=1-calm;
+    s1.classList.toggle('hide',p>.22);s2.classList.toggle('hide',!(p>.26&&p<.62));
+    fin.classList.toggle('on',p>.66);hint.style.opacity=p>.05?0:1;
+  }
+  build();on();
+  // gentle self-draw on load so the first frame is never empty
+  var t0=performance.now();(function intro(t){var k=clamp((t-t0)/1600);if(scrollY<5){T.style.strokeDasharray='1 1';T.style.strokeDashoffset=1-k}if(k<1)requestAnimationFrame(intro)})(t0);
+  addEventListener('scroll',on,{passive:true});addEventListener('resize',function(){build();on()});
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){fin.classList.add('on');s1.classList.add('hide')}
+})();
+</script>
+</body>
+</html>

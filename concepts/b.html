@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Концепт B — «Сначала вдох»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EFF8F7;--ink:#0B2F33;--soft:#5A7D80;--teal:#01959C;--teal-d:#016E74;--mint:#CDEDEA;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"Manrope",system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.stage{position:relative;min-height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:110px clamp(24px,6vw,110px) 80px;gap:40px;overflow:hidden}
+.nav{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:26px clamp(24px,6vw,110px);font-size:14px;z-index:5}
+.nav b{font-weight:600}.nav .l{display:flex;gap:30px;color:var(--soft)}.nav .l a:hover{color:var(--teal)}
+
+/* left — words */
+.copy{position:relative;z-index:3}
+.phase{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(64px,9vw,150px);line-height:.9;letter-spacing:-.04em;height:1em;position:relative}
+.phase span{position:absolute;left:0;top:0;white-space:nowrap;opacity:0;transform:translateY(20px);filter:blur(10px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease),filter 1.1s var(--ease)}
+.phase span:not(.on){transition-duration:.45s;transform:translateY(-16px)}
+.phase span.on{opacity:1;transform:none;filter:none;transition-delay:.25s}
+.phase span.c{color:var(--teal)}
+.lead{font-family:"Fraunces",serif;font-size:clamp(24px,2.3vw,36px);line-height:1.2;font-weight:300;margin-top:46px;max-width:17ch;opacity:0;animation:fade 1.4s var(--ease) .6s forwards}
+.who{margin-top:34px;font-size:clamp(15px,1.1vw,17px);line-height:1.6;color:var(--soft);max-width:40ch;opacity:0;animation:fade 1.4s var(--ease) .9s forwards}
+.who b{color:var(--ink);font-weight:600}
+.cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;opacity:0;animation:fade 1.4s var(--ease) 1.2s forwards}
+.btn{display:inline-flex;align-items:center;gap:12px;height:58px;padding:0 30px;border-radius:999px;background:var(--teal-d);color:#fff;font-weight:600;font-size:15px;transition:transform .5s var(--ease),background .3s}
+.btn:hover{background:var(--ink);transform:translateY(-2px)}
+.btn svg{width:17px;transition:transform .5s var(--ease)}.btn:hover svg{transform:translateX(4px)}
+.breathe{display:inline-flex;align-items:center;gap:10px;height:58px;padding:0 24px;border-radius:999px;background:transparent;border:1.5px solid var(--mint);color:var(--teal-d);font:600 15px Manrope;cursor:pointer;transition:border-color .3s,background .3s}
+.breathe:hover{border-color:var(--teal)}
+.breathe i{width:9px;height:9px;border-radius:50%;background:var(--teal);animation:dot 2s ease-in-out infinite}
+@keyframes dot{50%{transform:scale(1.6);opacity:.5}}
+@keyframes fade{to{opacity:1}}
+
+/* right — breathing orb with her inside */
+.orbw{position:relative;justify-self:center;width:min(42vw,560px);aspect-ratio:1;display:grid;place-items:center}
+.halo{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,rgba(1,149,156,.18) 0%,rgba(1,149,156,0) 68%);transform:scale(var(--s,1));transition:transform var(--t,4s) cubic-bezier(.45,0,.25,1)}
+.ring{position:absolute;border-radius:50%;border:1.5px solid rgba(1,149,156,.22);inset:6%;transform:scale(var(--s,1));transition:transform var(--t,4s) cubic-bezier(.45,0,.25,1)}
+.ring.r2{inset:-4%;border-color:rgba(1,149,156,.12);transition-delay:.15s}
+.ring.r3{inset:-14%;border-color:rgba(1,149,156,.07);transition-delay:.3s}
+.orb{position:relative;width:74%;aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 50px 90px -40px rgba(1,90,96,.55);transform:scale(calc(.92 + (var(--s,1) - 1) * .5));transition:transform var(--t,4s) cubic-bezier(.45,0,.25,1)}
+.orb img{width:100%;height:100%;object-fit:cover;object-position:50% 16%}
+.count{position:absolute;bottom:-2%;left:50%;transform:translateX(-50%);font-size:13px;color:var(--soft);white-space:nowrap;background:var(--bg);padding:6px 14px;border-radius:999px}
+.count b{color:var(--teal-d)}
+.proof{position:absolute;left:clamp(24px,6vw,110px);right:clamp(24px,6vw,110px);bottom:26px;display:flex;gap:44px;font-size:13.5px;color:var(--soft);opacity:0;animation:fade 1.4s var(--ease) 1.5s forwards}
+.proof b{color:var(--ink);font-weight:600;margin-right:6px}
+
+@media (max-width:860px){
+  .stage{grid-template-columns:1fr;padding-top:96px;gap:10px;text-align:left}
+  .orbw{width:min(80vw,380px);order:-1;margin-bottom:10px}
+  .nav .l{display:none}
+  .phase{font-size:16vw}
+  .lead{margin-top:28px}
+  .proof{position:static;flex-wrap:wrap;gap:16px;margin-top:36px}
+}
+@media (prefers-reduced-motion:reduce){.halo,.ring,.orb{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="stage">
+  <nav class="nav"><b>Руслана Завалихина</b><div class="l"><a href="#">С чем помогаю</a><a href="#">Курсы</a><a href="#">Отзывы</a><a href="tel:+79161480303">+7 916 148-03-03</a></div></nav>
+
+  <div class="copy">
+    <h1 class="phase" aria-label="Сначала вдох"><span class="on" data-p="in">Вдох.</span><span data-p="hold">Пауза.</span><span class="c" data-p="out">Выдох.</span></h1>
+    <p class="lead">Сначала просто подышим. Потом поговорим.</p>
+    <p class="who"><b>Руслана Завалихина</b>, психолог, кандидат психологических наук, доцент ВАК. 28 лет помогаю семьям, детям и взрослым вернуть спокойствие и опору.</p>
+    <div class="cta">
+      <a class="btn" href="https://psychologruslana.ru/product/konsultatsii-onlayn-offlayn/">Записаться на консультацию <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="breathe" id="go"><i></i><span>Подышать со мной минуту</span></button>
+    </div>
+  </div>
+
+  <div class="orbw" id="orbw" aria-hidden="true">
+    <div class="halo"></div><div class="ring r3"></div><div class="ring r2"></div><div class="ring"></div>
+    <div class="orb"><img src="../img/ruslana.jpg" alt=""></div>
+    <div class="count" id="count">ритм 4 · 4 · 6 секунд</div>
+  </div>
+
+  <div class="proof"><span><b>28 лет</b>практики</span><span><b>22 года</b>в вузе</span><span><b>1000+</b>выпускников</span><span><b>Онлайн</b>и в Москве</span></div>
+</main>
+<script>
+(function(){
+  var w=document.getElementById('orbw'),spans=document.querySelectorAll('.phase span'),count=document.getElementById('count'),go=document.getElementById('go');
+  var seq=[['in',4,1.22],['hold',4,1.22],['out',6,1]],i=0,guided=false,left=0,timer;
+  function show(p){spans.forEach(function(s){s.classList.toggle('on',s.dataset.p===p)})}
+  function step(){
+    var s=seq[i];show(s[0]);
+    w.style.setProperty('--t',s[1]+'s');w.style.setProperty('--s',s[2]);
+    if(guided){left-=s[1];if(left<=0){guided=false;count.innerHTML='Спасибо. Так ощущается <b>первый шаг</b>';go.querySelector('span').textContent='Ещё минуту'}else count.innerHTML='осталось <b>'+Math.ceil(left)+' с</b>'}
+    i=(i+1)%seq.length;timer=setTimeout(step,s[1]*1000);
+  }
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){show('in');return}
+  step();
+  go.onclick=function(){guided=true;left=60;i=0;clearTimeout(timer);count.innerHTML='осталось <b>60 с</b>';step()};
+})();
+</script>
+</body>
+</html>

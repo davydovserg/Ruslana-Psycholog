@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Три концепта первого экрана</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Manrope,system-ui,sans-serif;background:#0B2E32;color:#EAF6F5;padding:48px clamp(20px,5vw,72px)}
+h1{font-weight:500;font-size:clamp(28px,3.4vw,44px);letter-spacing:-.02em}
+.lead{color:#8FB9B6;margin-top:12px;max-width:60ch;line-height:1.6}
+.g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:40px}
+a.c{display:flex;flex-direction:column;background:#0F3A3F;border-radius:22px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+a.c:hover{transform:translateY(-6px)}
+.f{aspect-ratio:16/10;overflow:hidden;position:relative;background:#061F22}
+.f iframe{width:1440px;height:900px;border:0;transform:scale(var(--k));transform-origin:0 0;pointer-events:none}
+.b{padding:22px 24px 26px}
+.b b{font-size:20px;font-weight:600;display:block}
+.b p{color:#A9CCC9;font-size:14.5px;line-height:1.55;margin-top:8px}
+.b span{display:inline-block;margin-top:14px;color:#5FD3CB;font-weight:600;font-size:14px}
+@media (max-width:900px){.g{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<h1>Первый экран: три режиссёрских решения</h1>
+<p class="lead">Откройте каждый вариант на весь экран: в них есть движение и сценарий. Выберите один, и по нему соберу весь сайт.</p>
+<div class="g">
+  <a class="c" href="a.html"><div class="f"><iframe src="a.html" loading="lazy" title="A"></iframe></div><div class="b"><b>A · «Первый шаг»</b><p>Кино. Тёмная сцена, слова проявляются из темноты: «Иногда самое трудное — попросить о помощи». Затем луч света открывает портрет Русланы и её имя.</p><span>Смотреть →</span></div></a>
+  <a class="c" href="b.html"><div class="f"><iframe src="b.html" loading="lazy" title="B"></iframe></div><div class="b"><b>B · «Сначала вдох»</b><p>Терапия с первой секунды. Портрет в круге, который дышит в ритме 4-4-6. Слова меняются: «Вдох. Пауза. Выдох». Кнопка «Подышать со мной минуту».</p><span>Смотреть →</span></div></a>
+  <a class="c" href="c.html"><div class="f"><iframe src="c.html" loading="lazy" title="C"></iframe></div><div class="b"><b>C · «Нить»</b><p>Метафора работы психолога. Запутанный клубок линий при прокрутке распутывается в одну спокойную нить, и она приводит к Руслане.</p><span>Смотреть →</span></div></a>
+</div>
+<script>
+function fit(){document.querySelectorAll('.f').forEach(function(f){f.style.setProperty('--k',f.clientWidth/1440)})}fit();addEventListener('resize',fit);
+</script>
+</body>
+</html>
