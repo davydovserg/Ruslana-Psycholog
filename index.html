@@ -41,7 +41,7 @@ h2 b,h1 b{font-weight:500;color:var(--teal-d)}
 .mnav button{position:absolute;top:22px;right:var(--m);background:none;border:0;font:500 14px Commissioner;cursor:pointer;color:var(--ink);padding:10px 0}
 
 /* HERO */
-.knotscroll{height:320vh;position:relative}
+.knotscroll{height:230vh;position:relative}
 .stick{position:sticky;top:0;height:100svh;overflow:hidden}
 svg.hthread{position:absolute;inset:0;width:100%;height:100%}
 svg.hthread path{fill:none;stroke-linecap:round;stroke-linejoin:round}
@@ -507,13 +507,13 @@ document.documentElement.classList.add('js');
   }
   function hero(){
     var total=ks.offsetHeight-innerHeight,p=RM?1:clamp(-ks.getBoundingClientRect().top/total);
-    var untie=clamp((p-.2)/.5),calm=clamp((p-.35)/.45);
+    var untie=clamp((p-.08)/.42),calm=clamp((p-.2)/.4);
     T.style.strokeDasharray='1 1';
     if(introDone||p>0)T.style.strokeDashoffset=untie;
     T.style.opacity=.85*(1-untie*.6);
     C.style.strokeDasharray='1 1';C.style.strokeDashoffset=1-calm;
-    s1.classList.toggle('hide',p>.22);s2.classList.toggle('hide',!(p>.26&&p<.62));
-    fin.classList.toggle('on',p>.66);hint.style.opacity=p>.04?0:1;
+    s1.classList.toggle('hide',p>=.14);s2.classList.toggle('hide',!(p>=.14&&p<.5));
+    fin.classList.toggle('on',p>=.5);hint.style.opacity=p>.03?0:1;
   }
 
   /* STORY thread */
